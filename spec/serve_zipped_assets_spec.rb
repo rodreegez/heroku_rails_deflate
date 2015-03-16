@@ -15,7 +15,7 @@ describe HerokuRailsDeflate::ServeZippedAssets do
     root_path = File.expand_path('../fixtures', __FILE__)
     request_env = Rack::MockRequest.env_for(path)
     request_env['HTTP_ACCEPT_ENCODING'] = 'compress, gzip, deflate'
-    
+
     deflate_server = described_class.new(MockServer.new, root_path, '/assets', cache_control)
     deflate_server.call(request_env)
   end
