@@ -17,8 +17,11 @@ module HerokuRailsDeflate
     end
 
     def call(env)
+      if env['PATH_INFO'] != ENV['SKIP_ZIP_PATH']
+        @app.call(env) and return
+      end
       # Only process get requests
-      if env['REQUEST_METHOD'] == 'GET' && env['PATH_INFO'] != ENV['SKIP_ZIP_PATH']
+      if env['REQUEST_METHOD'] == 'GET'
         request = Rack::Request.new(env)
 
         # See if client accepts gzip encoding
